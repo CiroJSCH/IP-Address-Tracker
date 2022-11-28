@@ -1,7 +1,13 @@
 // Libraries
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  useMap,
+  CircleMarker,
+  ZoomControl,
+} from "react-leaflet";
 
 // Context
 import { LocationContext } from "../context/LocationContext";
@@ -16,22 +22,21 @@ const ChangeView = ({ center, zoom }) => {
 };
 
 const Map = () => {
-  const [information, setInformation] = useState({});
+  const { information, setInformation, ip, setError } = useContext(LocationContext);
+
   const [loading, setLoading] = useState(true);
 
-  const { ip } = useContext(LocationContext);
-
   useEffect(() => {
-    // Api_KEY = at_xPWsxj4AY3gk0NPyWW7kPuyPsIZSF
     axios
       .get(
-        `https://geo.ipify.org/api/v2/country,city?apiKey=at_xPWsxj4AY3gk0NPyWW7kPuyPsIZSF&ipAddress=${ip}`
+        `https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_API_KEY}&ipAddress=${ip}&domain=${ip}`
       )
       .then((response) => {
         setInformation(response.data);
         setLoading(false);
+        setError(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setError(true));
   }, [ip]);
 
   return (
@@ -45,7 +50,9 @@ const Map = () => {
           zoom={13}
           scrollWheelZoom={true}
           id="map"
-        >
+          zoomControl={false}
+        > 
+          <ZoomControl position="bottomleft"/>
           <ChangeView
             center={[
               information["location"]["lat"],
@@ -57,16 +64,14 @@ const Map = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker
-            position={[
+          <CircleMarker
+            center={[
               information["location"]["lat"],
               information["location"]["lng"],
             ]}
-          >
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
+            pathOptions={{ color: "blue" }}
+            radius={20}
+          ></CircleMarker>
         </MapContainer>
       )}
     </>
