@@ -30,7 +30,7 @@ Users should be able to:
 
 ### Screenshot
 
-![Desktop View ](https://i.postimg.cc/fbCTW9Lz/Captura-de-pantalla-2022-11-28-112542.png)
+![Desktop View](https://i.postimg.cc/fbCTW9Lz/Captura-de-pantalla-2022-11-28-112542.png)
 ![Mobile View](https://i.postimg.cc/SsKQnx2W/Captura-de-pantalla-2022-11-28-112649.png)
 ![Mobile View error](https://i.postimg.cc/ydr1cCc2/Captura-de-pantalla-2022-11-28-112745.png)
 
