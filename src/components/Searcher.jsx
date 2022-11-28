@@ -1,6 +1,8 @@
-import { useContext, useEffect, useRef } from "react";
+// Libraries
+import { useContext, useRef } from "react";
 import { LocationContext } from "../context/LocationContext";
 
+// Styles
 import "../styles/searcher.css";
 
 const Searcher = () => {
